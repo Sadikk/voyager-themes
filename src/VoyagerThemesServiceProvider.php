@@ -31,9 +31,9 @@ class VoyagerThemesServiceProvider extends ServiceProvider
         if (request()->is(config('voyager.prefix')) || request()->is(config('voyager.prefix').'/*')) {
             $this->addThemesTable();
 
-            app(Dispatcher::class)->listen('voyager.menu.display', function ($menu) {
+            /*app(Dispatcher::class)->listen('voyager.menu.display', function ($menu) {
                 $this->addThemeMenuItem($menu);
-            });
+            });*/
 
             app(Dispatcher::class)->listen('voyager.admin.routing', function ($router) {
                 $this->addThemeRoutes($router);
