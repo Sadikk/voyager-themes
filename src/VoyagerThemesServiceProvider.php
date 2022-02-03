@@ -31,9 +31,9 @@ class VoyagerThemesServiceProvider extends ServiceProvider
         if (request()->is(config('voyager.prefix')) || request()->is(config('voyager.prefix').'/*')) {
             $this->addThemesTable();
 
-            app(Dispatcher::class)->listen('voyager.menu.display', function ($menu) {
+            /*app(Dispatcher::class)->listen('voyager.menu.display', function ($menu) {
                 $this->addThemeMenuItem($menu);
-            });
+            });*/
 
             app(Dispatcher::class)->listen('voyager.admin.routing', function ($router) {
                 $this->addThemeRoutes($router);
@@ -101,9 +101,7 @@ class VoyagerThemesServiceProvider extends ServiceProvider
         $router->get('themes/activate/{theme}', ['uses' => $namespacePrefix.'ThemesController@activate', 'as' => 'theme.activate']);
         $router->get('themes/options/{theme}', ['uses' => $namespacePrefix.'ThemesController@options', 'as' => 'theme.options']);
         $router->post('themes/options/{theme}', ['uses' => $namespacePrefix.'ThemesController@options_save', 'as' => 'theme.options.post']);
-        $router->get('themes/options', function () {
-            return redirect(route('voyager.theme.index'));
-        });
+        $router->get('themes/options', $namespacePrefix.'ThemesController@index');
         $router->delete('themes/delete', ['uses' => $namespacePrefix.'ThemesController@delete', 'as' => 'theme.delete']);
     }
 
